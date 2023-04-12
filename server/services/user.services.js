@@ -1,6 +1,6 @@
 const User = require('../models/user.model');
 
-const hookWrapper = async (func) => {
+const hookWrapper = func => {
     const inner = async data => {
         let result, error;
         try {
