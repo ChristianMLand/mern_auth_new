@@ -1,6 +1,4 @@
 const { ironSession } = require("iron-session/express");
-const { authRouter } = require('./routes/auth.routes');
-const { userRouter } = require('./routes/user.routes');
 const express = require("express");
 const cors = require("cors");
 
@@ -21,7 +19,7 @@ app.use(
     })
 );
 
-app.use('/api/auth', authRouter);
-app.use('/api/users', userRouter);
+app.use('/api/auth', require('./routes/auth.routes'));
+app.use('/api/users', require('./routes/user.routes'));
 
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));

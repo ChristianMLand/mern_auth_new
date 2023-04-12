@@ -7,4 +7,4 @@ authRouter.post('/', AuthController.handleLogin);
 authRouter.get('/', authenticate, AuthController.handleGetLoggedUser);
 authRouter.delete('/', authenticate, AuthController.handleLogout);
 
-module.exports = { authRouter };
+module.exports = authRouter;
