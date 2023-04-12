@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../libs/context";
 import { useEffect } from 'react';
-import { getLoggedUser, logoutUser } from "../services/apiService";
+import { getLoggedUser, logoutUser } from "../services/internalApiService";
 
 
 const SuccessDisplay = () => {

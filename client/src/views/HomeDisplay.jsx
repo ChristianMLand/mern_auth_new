@@ -1,5 +1,5 @@
 import Form from '../components/Form';
-import { registerUser, loginUser } from '../services/apiService';
+import { registerUser, loginUser } from '../services/internalApiService';
 
 const HomeDisplay = () => {
     return (
