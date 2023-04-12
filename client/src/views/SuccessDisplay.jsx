@@ -8,23 +8,23 @@ const SuccessDisplay = () => {
     const { loggedUser, setLoggedUser } = useAppContext();
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        logoutUser()
-            .then(() => {
-                navigate("/")
-            });
+    const handleClick = async () => {
+        await logoutUser();
+        navigate("/");
+    }
+
+    const handleGetLoggedUser = async () => {
+        const [data] = await getLoggedUser();
+        if (data) {
+            setLoggedUser(data);
+        } else {
+            navigate("/")
+        }
     }
 
     useEffect(() => {
         if (!loggedUser) {
-            getLoggedUser()
-                .then(([data]) => {
-                    if (data) {
-                        setLoggedUser(data);
-                    } else {
-                        navigate("/")
-                    }
-                })
+            handleGetLoggedUser();
         }
     }, [])
 

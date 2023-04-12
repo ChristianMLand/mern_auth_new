@@ -10,18 +10,15 @@ const Form = props => {
     const { setLoggedUser } = useAppContext();
     const navigate = useNavigate();
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
-        setFormErrors({});
-        service(formData)
-            .then(([data, errors]) => {
-                if (errors) {
-                    setFormErrors(errors);
-                } else if (data) {
-                    setLoggedUser(data);
-                    navigate("/success")
-                }
-            });
+        const [data, errors] = await service(formData);
+        if (errors) {
+            setFormErrors(errors);
+        } else {
+            setLoggedUser(data);
+            navigate("/success");
+        }
     }
 
     const handleChange = e => {
