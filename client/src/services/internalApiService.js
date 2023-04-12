@@ -21,10 +21,20 @@ const serviceWrapper = func => {
     return inner;
 }
 
-export const registerUser = serviceWrapper(async data => await http.post('/users', data));
+export const registerUser = serviceWrapper(
+    async data => await http.post('/users', data)
+);
 
-export const loginUser = serviceWrapper(async data => http.post("/auth", data));
+export const loginUser = serviceWrapper(
+    async data => http.post("/auth", data)
+);
 
-export const getLoggedUser = serviceWrapper(async () => await http.get('/auth'));
+export const getLoggedUser = serviceWrapper(
+    async () => await http.get('/auth')
+);
 
-export const logoutUser = serviceWrapper(async () => await http.delete('/auth'));
+export const logoutUser = serviceWrapper(
+    async () => await http.delete('/auth')
+);
+
+//TODO maybe refactor to use a single useService hook, where the service name and data are passed as args

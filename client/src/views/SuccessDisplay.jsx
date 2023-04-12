@@ -11,29 +11,24 @@ const SuccessDisplay = () => {
     const handleClick = async () => {
         await logoutUser();
         navigate("/");
-    }
+    };
 
     const handleGetLoggedUser = async () => {
         const [data] = await getLoggedUser();
-        if (data) {
-            setLoggedUser(data);
-        } else {
-            navigate("/")
-        }
-    }
+        if (data) setLoggedUser(data);
+        else navigate("/");
+    };
 
     useEffect(() => {
-        if (!loggedUser) {
-            handleGetLoggedUser();
-        }
-    }, [])
+        if (!loggedUser) handleGetLoggedUser();
+    }, []);
 
     return (
         <main>
             <h1>Welcome {loggedUser?.username}</h1>
             <button className="btn btn-danger" onClick={handleClick}>Logout</button>
         </main>
-    )
+    );
 }
 
 export default SuccessDisplay;
