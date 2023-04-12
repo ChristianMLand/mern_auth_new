@@ -1,22 +1,30 @@
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../libs/context";
 import { useEffect } from 'react';
-import axios from 'axios';
+import { getLoggedUser, logoutUser } from "../services/apiService";
+
 
 const SuccessDisplay = () => {
     const { loggedUser, setLoggedUser } = useAppContext();
     const navigate = useNavigate();
 
     const handleClick = () => {
-        axios.delete("http://localhost:8000/api/auth", { withCredentials: true })
-            .then(_ =>  navigate("/"));
+        logoutUser()
+            .then(() => {
+                navigate("/")
+            });
     }
 
     useEffect(() => {
         if (!loggedUser) {
-            axios.get("http://localhost:8000/api/auth", { withCredentials: true })
-                .then(res => setLoggedUser(res.data))
-                .catch(_ => navigate("/"));
+            getLoggedUser()
+                .then(([data]) => {
+                    if (data) {
+                        setLoggedUser(data);
+                    } else {
+                        navigate("/")
+                    }
+                })
         }
     }, [])
 

@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../libs/context";
-import axios from "axios";
 
 const Form = props => {
-    const { name, action, fields } = props;
+    const { name, service, fields } = props;
     const initialValues = Object.keys(fields).reduce((prev, field) => ({ ...prev, [field]: "" }), {});
     const [formData, setFormData] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
@@ -14,12 +13,15 @@ const Form = props => {
     const handleSubmit = e => {
         e.preventDefault();
         setFormErrors({});
-        axios.post(`http://localhost:8000/api/${action}`, formData, { withCredentials: true })
-            .then(res => {
-                setLoggedUser(res.data);
-                navigate("/success")
-            })
-            .catch(errors => setFormErrors(errors.response.data.errors));
+        service(formData)
+            .then(([data, errors]) => {
+                if (errors) {
+                    setFormErrors(errors);
+                } else if (data) {
+                    setLoggedUser(data);
+                    navigate("/success")
+                }
+            });
     }
 
     const handleChange = e => {

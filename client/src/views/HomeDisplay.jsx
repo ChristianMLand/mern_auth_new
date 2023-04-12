@@ -1,11 +1,12 @@
 import Form from '../components/Form';
+import { registerUser, loginUser } from '../services/apiService';
 
 const HomeDisplay = () => {
     return (
         <main className="row justify-content-center">
             <Form 
                 name="Register"
-                action="users"
+                service={registerUser}
                 fields={{
                     username: "text",
                     email: "text",
@@ -15,7 +16,7 @@ const HomeDisplay = () => {
             />
             <Form 
                 name="Login"
-                action="auth"
+                service={loginUser}
                 fields={{
                     email: "text",
                     password: "password"
