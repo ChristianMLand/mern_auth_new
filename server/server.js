@@ -1,11 +1,14 @@
+const { ironSession } = require("iron-session/express");
+const { authRouter } = require('./routes/auth.routes');
+const { userRouter } = require('./routes/user.routes');
 const express = require("express");
 const cors = require("cors");
-const { ironSession } = require("iron-session/express");
-const app = express();
-const PORT = 8000;
-const DB = "mernAuthDB"
 
 require('dotenv').config();
+require("./config/mongoose.config");
+
+const PORT = process.env.PORT;
+const app = express();
 
 app.use(
     cors({credentials: true, origin: "http://localhost:3000"}), 
@@ -18,7 +21,7 @@ app.use(
     })
 );
 
-require("./config/mongoose.config")(DB);
-require("./routes/user.routes")(app);
+app.use('/api/auth', authRouter);
+app.use('/api/users', userRouter);
 
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
