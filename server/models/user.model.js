@@ -36,7 +36,7 @@ UserSchema.pre("save", async function(next) {
     next();
 });
 // define a static method for our model to handle login validations
-UserSchema.statics.checkLogin = async function({ email, password }) { 
+UserSchema.statics.validateLogin = async function({ email, password }) { 
     const user = await this.findOne({ email });
     if (!(user && await bcrypt.compare(password, user.password))) {
         throw new this().invalidate("password", "Invalid Credentials");

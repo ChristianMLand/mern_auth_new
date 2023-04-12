@@ -1,8 +1,8 @@
 const { tryLogin } = require("../services/user.services");
 
-const getLoggedUser = (req, res) => res.json(req.session.user);
+const handleGetLoggedUser = (req, res) => res.json(req.session.user);
 
-const login = async (req, res) => {
+const handleLogin = async (req, res) => {
     const [user, error] = await tryLogin(req.body);
     if (error) return res.status(401).json(error);
     req.session.user = user;
@@ -10,9 +10,9 @@ const login = async (req, res) => {
     return res.json(user);
 }
 
-const logout = (req, res) => {
+const handleLogout = (req, res) => {
     req.session.destroy();
     return res.json({ message: "success" });
 }
 
-module.exports = { login, logout, getLoggedUser };
+module.exports = { handleLogin, handleLogout, handleGetLoggedUser };
