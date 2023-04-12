@@ -1,15 +1,13 @@
-const User = require('../models/user.model');
+const { tryLogin } = require("../services/user.services");
 
 const getLoggedUser = (req, res) => res.json(req.session.user);
 
 const login = async (req, res) => {
-    try {
-        req.session.user = await User.checkLogin(req.body);
-        await req.session.save();
-        return res.json(req.session.user);
-    } catch (error) {
-        return res.status(401).json(error);
-    }
+    const [user, error] = await tryLogin(req.body);
+    if (error) return res.status(401).json(error);
+    req.session.user = user;
+    await req.session.save();
+    return res.json(user);
 }
 
 const logout = (req, res) => {
