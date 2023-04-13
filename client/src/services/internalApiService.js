@@ -26,7 +26,7 @@ export const registerUser = serviceWrapper(
 );
 
 export const loginUser = serviceWrapper(
-    async data => http.post("/auth", data)
+    async data => await http.post("/auth", data)
 );
 
 export const getLoggedUser = serviceWrapper(
